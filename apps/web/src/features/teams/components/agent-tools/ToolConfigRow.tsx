@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { IntegrationIcon } from '@/components/common/IntegrationIcon';
-import NeedsProLink from '@/components/common/NeedsProLink';
+import LockedLabel from '@/components/common/LockedLabel';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import type { ToolRowProps } from '../../types/toolSource';
@@ -52,12 +52,7 @@ export function ToolConfigRow({
             <span className="truncate text-xs text-muted-foreground/70">{on}</span>
             {!tool.supported &&
               (locked ? (
-                <NeedsProLink
-                  feature={tool.source ? 'http-tools' : 'agent-tools'}
-                  label={t('locked')}
-                  hint={t('lockedHint')}
-                  className="mt-1"
-                />
+                <LockedLabel label={t('locked')} hint={t('lockedHint')} className="mt-1" />
               ) : (
                 <span
                   title={t('unavailableHint')}

@@ -9,14 +9,6 @@ export const LINE = 'fill-border';
 export const INK = 'fill-foreground';
 export const SUB = 'fill-muted-foreground';
 
-// Pro's gold, in the pictures of the Pro features. Deeper on light, where the lighter gold
-// of the dark theme fades.
-export const GOLD = 'fill-[#E9A52A] dark:fill-[#F2B544]';
-export const GOLD_STROKE = 'stroke-[#E9A52A] dark:stroke-[#F2B544]';
-export const GOLD_SOFT = 'fill-[#E9A52A]/16 dark:fill-[#F2B544]/18';
-export const GOLD_TEXT = 'fill-[#8A6410] dark:fill-[#F2B544]';
-export const GOLD_ICON = 'text-[#8A6410] dark:text-[#F2B544]';
-
 // The issue titles the pictures draw from.
 export type SampleIssue = keyof (typeof onboarding)['art']['issues'];
 

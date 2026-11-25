@@ -9,7 +9,6 @@ export { default as GodSectionExtras } from './GodSectionExtras';
 export { default as godSections } from './godSections';
 export { cloudMessages, loadCloudMessages } from './messages';
 export { default as NoTeamStart } from './NoTeamStart';
-export { default as proEdition } from './proEdition';
 export { default as PublicPage } from './PublicPage';
 export { default as ScheduleDialog } from './ScheduleDialog';
 export { default as ShellNotice } from './ShellNotice';

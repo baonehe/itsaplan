@@ -24,7 +24,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
-import NeedsProLink from '@/components/common/NeedsProLink';
+import LockedLabel from '@/components/common/LockedLabel';
 import SettingsIconButton from '../SettingsIconButton';
 import { useSettingsCan } from '../../context/settingsPermission';
 import { formatUtc } from '../../utils/cronSchedule';
@@ -103,12 +103,7 @@ export function SettingsScheduleRow({
       <TableCell className="px-3 py-4 align-top whitespace-normal">
         <SettingsScheduleWhen schedule={schedule} columnName={columnName} />
         {!schedule.supported && (
-          <NeedsProLink
-            feature="schedules"
-            label={t('unavailable')}
-            hint={t('unavailableHint')}
-            className="mt-1.5"
-          />
+          <LockedLabel label={t('unavailable')} hint={t('unavailableHint')} className="mt-1.5" />
         )}
       </TableCell>
       <TableCell className="px-3 py-4 align-top text-sm whitespace-nowrap tabular-nums">

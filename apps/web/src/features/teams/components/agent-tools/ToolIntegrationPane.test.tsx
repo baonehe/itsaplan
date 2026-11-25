@@ -40,10 +40,10 @@ function markup(meta: IntegrationMeta) {
   );
 }
 
-it('shows the tools of an integration of another edition with the way to it, and no selection', () => {
+it('shows the tools of an integration of another edition, with no link to Pro and no selection', () => {
   const html = markup(exa);
-  assert.match(html, /Exa is available in Cloud and Pro/);
-  assert.match(html, /utm_campaign=agent-tools/);
+  assert.match(html, /Exa is not available here/);
+  assert.doesNotMatch(html, /itsaplan\.dev\/pro/);
   assert.match(html, /Search/);
   assert.doesNotMatch(html, /role="checkbox"/);
   assert.doesNotMatch(html, /No Exa credential yet/);
@@ -52,5 +52,5 @@ it('shows the tools of an integration of another edition with the way to it, and
 it('asks for a credential where the integration runs here', () => {
   const html = markup({ ...exa, locked: undefined });
   assert.match(html, /No Exa credential yet/);
-  assert.doesNotMatch(html, /available in Cloud and Pro/);
+  assert.doesNotMatch(html, /not available here/);
 });

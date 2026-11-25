@@ -1,10 +1,7 @@
 import { Lock } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import UpgradeToProButton from '@/components/common/UpgradeToProButton';
 import { cn } from '@/lib/utils';
 
-// Shown on an integration that comes with another edition, in the add-tool and the
-// credential dialogs: its tools are listed, and nothing of it can be added here.
 export function ToolLockedNotice({
   integration,
   className,
@@ -27,7 +24,6 @@ export function ToolLockedNotice({
         </p>
         <p className="text-xs text-muted-foreground">{t('lockedIntegrationHint')}</p>
       </div>
-      <UpgradeToProButton feature="agent-tools" className="shrink-0" />
     </div>
   );
 }

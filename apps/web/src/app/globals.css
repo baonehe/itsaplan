@@ -32,8 +32,6 @@
   --color-destructive-text: var(--destructive-text);
   --color-overdue: var(--overdue);
   --color-warning: var(--warning);
-  --color-pro: var(--pro);
-  --color-pro-foreground: var(--pro-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -95,9 +93,6 @@
   --destructive: oklch(0.505 0.21 27);
   --destructive-text: var(--destructive);
   --warning: oklch(0.52 0.11 72);
-  /* One pair for both themes: .dark does not override it. */
-  --pro: oklch(0.87 0.16 92);
-  --pro-foreground: oklch(0.25 0.05 80);
   --border: oklch(0.905 0 0);
   --input: oklch(0.88 0 0);
   --ring: oklch(0.62 0 0);
@@ -203,7 +198,7 @@
 }
 
 /* The palettes a user can pick besides the default, in light and dark. They override
-   colors only; shadows, radius and the pro badge stay shared. The root layout sets
+   colors only; shadows and radius stay shared. The root layout sets
    data-palette from the color theme cookie. */
 :root[data-palette='github'] {
   --background: #f6f8fa;

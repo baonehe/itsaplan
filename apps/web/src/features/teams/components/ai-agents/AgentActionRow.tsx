@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import type { AgentTool } from '@/lib/api/endpoints/agents';
 import { Checkbox } from '@/components/ui/checkbox';
-import NeedsProLink from '@/components/common/NeedsProLink';
+import LockedLabel from '@/components/common/LockedLabel';
 import { AgentItemInfo } from './AgentItemInfo';
 
 // One action in an open group of the Actions section, with what it does behind an "i". A
@@ -33,12 +33,7 @@ export function AgentActionRow({
         <span className="min-w-0 truncate">{tool.label}</span>
       </label>
       {tool.locked && (
-        <NeedsProLink
-          feature="agent-actions"
-          label={t('locked')}
-          hint={t('lockedHint')}
-          className="shrink-0"
-        />
+        <LockedLabel label={t('locked')} hint={t('lockedHint')} className="shrink-0" />
       )}
       <AgentItemInfo name={tool.label} description={tool.description} />
     </div>

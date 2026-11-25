@@ -1,19 +1,16 @@
 import { useTranslations } from 'next-intl';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { type ProFeature, proUrl } from '@/utils/app';
 
 export default function OnboardingFooter({
   count,
   index,
-  proFeature,
   onGo,
   onDone,
 }: {
   count: number;
   index: number;
-  proFeature?: ProFeature;
   onGo: (index: number) => void;
   onDone: () => void;
 }) {
@@ -46,14 +43,6 @@ export default function OnboardingFooter({
         {index > 0 && (
           <Button variant="ghost" onClick={() => onGo(index - 1)}>
             {tCommon('back')}
-          </Button>
-        )}
-        {proFeature && (
-          <Button asChild className="bg-pro text-pro-foreground hover:bg-pro/90">
-            <a href={proUrl(proFeature)} target="_blank" rel="noreferrer">
-              {t('getInPro')}
-              <ArrowUpRight className="opacity-70" />
-            </a>
           </Button>
         )}
         {last ? (

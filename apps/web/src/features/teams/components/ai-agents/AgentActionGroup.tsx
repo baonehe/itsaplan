@@ -15,7 +15,7 @@ import type { AgentTool } from '@/lib/api/endpoints/agents';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { MatrixCheckbox } from '@/components/common/permissions/MatrixCheckbox';
-import NeedsProLink from '@/components/common/NeedsProLink';
+import LockedLabel from '@/components/common/LockedLabel';
 import { agentActionGroupIcons } from '@/cloud';
 import { AgentActionRow } from './AgentActionRow';
 
@@ -131,12 +131,7 @@ export function AgentActionGroup({
           />
         )}
         {optIn.length > 0 && grantable.length === 0 && (
-          <NeedsProLink
-            feature="agent-actions"
-            label={tools('locked')}
-            hint={tools('lockedHint')}
-            className="mx-2"
-          />
+          <LockedLabel label={tools('locked')} hint={tools('lockedHint')} className="mx-2" />
         )}
         {optIn.length === 0 && (
           <Tooltip>
