@@ -226,6 +226,13 @@ export const qk = {
     ['agentSchedules', projectKey, 'page', params] as const,
   agentScheduleRuns: (projectKey: string, scheduleId: number) =>
     ['agentSchedules', projectKey, scheduleId, 'runs'] as const,
+  agentWorkflows: (projectKey: string) => ['agentWorkflows', projectKey] as const,
+  agentWorkflowPage: (projectKey: string, params: unknown) =>
+    ['agentWorkflows', projectKey, 'page', params] as const,
+  agentWorkflowRuns: (projectKey: string, workflowId: number) =>
+    ['agentWorkflows', projectKey, workflowId, 'runs'] as const,
+  agentWorkflowRun: (projectKey: string, workflowId: number, runId: number) =>
+    ['agentWorkflows', projectKey, workflowId, 'runs', runId] as const,
   // The caller's chat threads with the agents of a project (the chat history) and the
   // transcript of one thread (restored when a thread is opened). A search is a list of
   // its own, so the unsearched list stays cached while one is typed.

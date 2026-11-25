@@ -39,6 +39,7 @@ import { chartRoutes } from './modules/charts';
 import { settingsRoutes } from './modules/settings';
 import { godRoutes } from './modules/god';
 import { agentScheduleRoutes } from './modules/agents/schedules';
+import { agentWorkflowRoutes } from './modules/agents/workflows';
 import { modelPriceRoutes } from './modules/agents/prices';
 import { runnerQueueRoutes } from './modules/agents/queue';
 import { agentRunnerRoutes } from './modules/agents/runner';
@@ -105,6 +106,7 @@ export const planner = new Elysia({ name: 'planner' })
   .use(webhookRoutes)
   .use(gitSettingsRoutes)
   .use(agentScheduleRoutes)
+  .use(agentWorkflowRoutes)
   .use(modelPriceRoutes)
   .use(agentRunnerRoutes)
   .use(runnerQueueRoutes)

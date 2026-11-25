@@ -222,6 +222,7 @@ export const app = new Elysia()
                   'Repository integration: the inbound pull request webhook and its per-project settings',
               },
               { name: 'Agent Schedules', description: 'Recurring tasks for internal agents' },
+              { name: 'Agent Workflows', description: 'Agents that hand work to each other' },
               { name: 'Model Prices', description: 'The prices a workspace costs model calls at' },
               { name: 'Dashboards', description: 'Saved analytics dashboards' },
               { name: 'Documents', description: 'Shared project Docs pages' },

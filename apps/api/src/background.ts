@@ -2,6 +2,7 @@ import { getJobSettings, type JobSettings } from '@repo/db';
 import { processAgentRuns } from '#modules/agents/core/run-poller';
 import { dispatchInvocations } from '#modules/agents/invocation/service';
 import { pruneAgentTraces } from '#modules/agents/core/runtime/trace-retention';
+import { advanceRunningWorkflowRuns } from '#modules/agents/workflows/engine';
 import { sweepStaleIssues } from '#modules/issues/auto-archive';
 import { sweepExpiredShares } from '#modules/share/service';
 
@@ -26,6 +27,7 @@ export function startBackgroundJobs(): void {
   // token away; once a minute keeps the stored state close to what users see.
   startLoop('share-expiry', expireShares, (jobs) => minutes(jobs.sweeps.shareExpiryMinutes));
   startLoop('agent-traces', pruneTraces, (jobs) => minutes(jobs.sweeps.tracePruneMinutes));
+  startLoop('agent-workflows', advanceRunningWorkflowRuns, () => minutes(1));
 }
 
 function minutes(value: number): number {

@@ -890,6 +890,111 @@ export const agentRun = pgTable(
   ],
 );
 
+export interface AgentWorkflowStep {
+  name: string;
+  agentId: number;
+  prompt: string;
+  kind: 'work' | 'review';
+}
+
+export const agentWorkflow = pgTable(
+  'agent_workflow',
+  {
+    id: serial('id').primaryKey(),
+    projectId: integer('project_id')
+      .notNull()
+      .references(() => project.id, { onDelete: 'cascade' }),
+    name: text('name').notNull(),
+    status: text('status').notNull().default('active'),
+    trigger: text('trigger').notNull().default('manual'),
+    columnId: integer('column_id').references(() => projectColumn.id, { onDelete: 'cascade' }),
+    maxRounds: integer('max_rounds').notNull().default(3),
+    steps: jsonb('steps').$type<AgentWorkflowStep[]>().notNull().default([]),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    check('agent_workflow_status_check', sql`${t.status} IN ('active', 'paused')`),
+    check(
+      'agent_workflow_trigger_check',
+      sql`(${t.trigger} = 'manual' AND ${t.columnId} IS NULL)
+        OR (${t.trigger} = 'status' AND ${t.columnId} IS NOT NULL)`,
+    ),
+    check('agent_workflow_max_rounds_check', sql`${t.maxRounds} BETWEEN 1 AND 10`),
+    index('agent_workflow_project_idx').on(t.projectId),
+    index('agent_workflow_column_idx')
+      .on(t.columnId)
+      .where(sql`${t.columnId} IS NOT NULL`),
+  ],
+);
+
+export const agentWorkflowRun = pgTable(
+  'agent_workflow_run',
+  {
+    id: serial('id').primaryKey(),
+    workflowId: integer('workflow_id')
+      .notNull()
+      .references(() => agentWorkflow.id, { onDelete: 'cascade' }),
+    projectId: integer('project_id')
+      .notNull()
+      .references(() => project.id, { onDelete: 'cascade' }),
+    issueId: integer('issue_id').references(() => issue.id, { onDelete: 'cascade' }),
+    status: text('status').notNull().default('running'),
+    input: text('input').notNull().default(''),
+    steps: jsonb('steps').$type<AgentWorkflowStep[]>().notNull(),
+    maxRounds: integer('max_rounds').notNull(),
+    round: integer('round').notNull().default(1),
+    requestedByUserId: text('requested_by_user_id').references(() => user.id, {
+      onDelete: 'set null',
+    }),
+    startedByUserId: text('started_by_user_id').references(() => user.id, {
+      onDelete: 'set null',
+    }),
+    canceledByUserId: text('canceled_by_user_id').references(() => user.id, {
+      onDelete: 'set null',
+    }),
+    error: text('error'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    finishedAt: timestamp('finished_at', { withTimezone: true }),
+  },
+  (t) => [
+    check(
+      'agent_workflow_run_status_check',
+      sql`${t.status} IN ('running', 'success', 'failed', 'canceled')`,
+    ),
+    index('agent_workflow_run_workflow_idx').on(t.workflowId, t.id.desc()),
+    index('agent_workflow_run_running_idx')
+      .on(t.id)
+      .where(sql`${t.status} = 'running'`),
+    uniqueIndex('agent_workflow_run_issue_running_uq')
+      .on(t.workflowId, t.issueId)
+      .where(sql`${t.status} = 'running' AND ${t.issueId} IS NOT NULL`),
+    index('agent_workflow_run_issue_idx')
+      .on(t.issueId)
+      .where(sql`${t.issueId} IS NOT NULL`),
+  ],
+);
+
+export const agentWorkflowRunStep = pgTable(
+  'agent_workflow_run_step',
+  {
+    id: serial('id').primaryKey(),
+    workflowRunId: integer('workflow_run_id')
+      .notNull()
+      .references(() => agentWorkflowRun.id, { onDelete: 'cascade' }),
+    agentRunId: integer('agent_run_id')
+      .notNull()
+      .references(() => agentRun.id, { onDelete: 'cascade' }),
+    position: integer('position').notNull(),
+    round: integer('round').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    uniqueIndex('agent_workflow_run_step_agent_run_uq').on(t.agentRunId),
+    index('agent_workflow_run_step_run_idx').on(t.workflowRunId, t.id),
+  ],
+);
+
 // A bounded execution transcript for one external runner attempt.
 export const agentRunTrace = pgTable(
   'agent_run_trace',
