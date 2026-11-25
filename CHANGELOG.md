@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.1](https://github.com/croffasia/itsaplan/compare/v1.13.0...v1.13.1) (2026-11-25)
+
+
+### Documentation
+
+* add a Trusted by row and a list of teams ([#1005](https://github.com/croffasia/itsaplan/issues/1005)) ([93f5bb0](https://github.com/croffasia/itsaplan/commit/93f5bb05b24480c269e139e2f6cd4db6048287e8))
+
 ## [1.13.0](https://github.com/croffasia/itsaplan/compare/v1.12.0...v1.13.0) (2026-11-24)
 
 
